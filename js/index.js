@@ -1,15 +1,10 @@
+let store = {
+  todos: []
+};
+
 // Constants
 const API_URL = 'https://api.gohardstudy.gq';
-const ROOT = document.getElementById('ROOT');
-
-// Variables
-let isTodosLoaded = false;
-
-// Instruments
-const inputName = (id) => `input_${id}`;
-const buttonName = (id) => `button_${id}`;
-
-ROOT.innerHTML = `
+const WRAPPER = `
   <header class='header'>
     Hello bro, i am a header.
   </header>
@@ -20,6 +15,10 @@ ROOT.innerHTML = `
     Hello bro, i am a footer.
   </footer>
 `;
+
+// Instruments
+const inputName = (id) => `input_${id}`;
+const buttonName = (id) => `button_${id}`;
 
 const createTodoListHTML = (todos) => todos.reduce((acc, todo) => acc.concat(`
   <div class="todo">
@@ -37,33 +36,42 @@ const createTodoListHTML = (todos) => todos.reduce((acc, todo) => acc.concat(`
   </div>
 `), '');
 
-const addEventListenersToTodosButtons = (todosButtons) => void todosButtons.forEach((todoButton) => {
-  todoButton.addEventListener('click', (event) => {
-    alert(`click on ${event.target.id}`); // Continue here bro...
-  })
-})
+const addEventListenersToTodosButtons = (todosButtons) => 
+  void todosButtons.forEach((todoButton) => 
+    void todoButton.addEventListener('click', (event) => {
+      // Continue here bro...
+      alert(`click on ${event.target.id}`);
+    }));
 
 const fetchTodosAndRender = async () => {
   try {
-    const TODOS = document.getElementById('TODOS');
     const response = await fetch(`${API_URL}/todos`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     const todos = await response.json();
 
-    setTimeout(() => { // Just for delay loading.
-      TODOS.innerHTML = createTodoListHTML(todos);
+    store = {
+      ...store,
+      todos
+    };
 
-      addEventListenersToTodosButtons(document.querySelectorAll('.todoButton'))
-    }, 1000);
+    document
+      .getElementById('TODOS')
+      .innerHTML = createTodoListHTML(todos);
+
+    addEventListenersToTodosButtons(document.querySelectorAll('.todoButton'));
   } catch (error) {
     console.log(error);
   }
 }
 
-document.addEventListener("DOMContentLoaded", fetchTodosAndRender);
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .getElementById('ROOT')
+    .innerHTML = WRAPPER;
+
+  fetchTodosAndRender();
+});
 
