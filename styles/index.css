@@ -27,7 +27,7 @@ body {
 }
 
 .todo {
-  display: grid;
+  /* display: grid; */
   box-sizing: border-box;
   grid-template-columns: 60% 40%;
   align-items: center;
@@ -44,5 +44,11 @@ body {
 .todoButton {
   font-family: serif;
   font-size: 20px;
+  cursor: pointer;
+}
+
+.appendButton {
+  font-family: serif;
+  font-size: 22px;
   cursor: pointer;
 }
