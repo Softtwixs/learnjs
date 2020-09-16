@@ -1,9 +1,19 @@
+// Types
+import {TypeTodoElementID, TypeTodoList, TypeEventWithTodo, TypeResponseTodo} from './types';
+
+// Cosnstants
+import {API_URL, APPEND_DIV, ElementButtonTodo, ElementRoot, ElementTodos,  EventType, WRAPPER} from './constants';
 
 // Instruments
-const inputName:TypeTodoElementID = (id) => `input_${id}`;
-const buttonName:TypeTodoElementID = (id) => `button_${id}`;
-const upbuttonName:TypeTodoElementID = (id) => `upd_button_${id}`;
-const delbuttonName:TypeTodoElementID = (id) => `del_button_${id}`;
+const inputName: TypeTodoElementID = (id) => `input_${id}`;
+const buttonName: TypeTodoElementID = (id) => `button_${id}`;
+const upbuttonName: TypeTodoElementID = (id) => `upd_button_${id}`;
+const delbuttonName: TypeTodoElementID = (id) => `del_button_${id}`;
+
+// Store
+let store = {
+  todos: []
+};
 
 const createTodoListHTML:TypeTodoList = (todos) => todos.reduce((acc:string, todo) => acc.concat(`
   <div class="todo">
@@ -58,7 +68,7 @@ const addEventListenersToTodosButtons = (todosButtons:NodeListOf<Element>) =>
 // Получаю ошибку в строке 
 // document.getElementById("add_button_todo").addEventListener("click", MyAppendTodo);
 
-const MyAppendTodo = async () => {
+const MyAppendTodo: TypeEventWithTodo = async () => {
     try {
         const response = await fetch(`${API_URL}/todos`, {
             method: 'POST',
@@ -74,7 +84,7 @@ const MyAppendTodo = async () => {
       }
 }
 
-const MyUpdateTodo:TypeventWithTodo = async (todoId) => {
+const MyUpdateTodo:TypeEventWithTodo = async (todoId) => {
     try {
         const response = await fetch(`${API_URL}/todos/${todoId}`, {
             method: 'PUT',
@@ -90,7 +100,7 @@ const MyUpdateTodo:TypeventWithTodo = async (todoId) => {
       }
 }
 
-const MyDeleteTodo:TypeventWithTodo = async (todoId) => {
+const MyDeleteTodo:TypeEventWithTodo = async (todoId) => {
     try {
         const response = await fetch(`${API_URL}/todos/${todoId}`, {
             method: 'DELETE',
@@ -105,12 +115,13 @@ const MyDeleteTodo:TypeventWithTodo = async (todoId) => {
       }
 }
 
-const fetchTodosAndRender = async () => {
+export const fetchTodosAndRender = async () => {
   try {
     const response = await fetch(`${API_URL}/todos`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
+    console.log(1);
 
     const todos = await response.json();
 
@@ -118,14 +129,13 @@ const fetchTodosAndRender = async () => {
       ...store,
       todos
     };
-    if (ElementTodos!==null){
-      ElementTodos.innerHTML = APPEND_DIV + createTodoListHTML(todos) ;
-    }
+      
+    document.getElementById('TODOS')!.innerHTML = APPEND_DIV + createTodoListHTML(todos) ;
    
 
     addEventListenersToTodosButtons(document.querySelectorAll('.todoButton'));
     if (ElementButtonTodo!==null){
-        ElementButtonTodo.addEventListener("click", MyAppendTodo);
+        ElementButtonTodo.addEventListener("click", () => MyAppendTodo());
     }
    
    

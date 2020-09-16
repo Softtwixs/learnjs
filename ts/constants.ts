@@ -1,10 +1,11 @@
-let store:object = {
-    todos: Array<string>()
-  };
-enum EventType {add='add_', update ='upd_', delete = 'del_'};  
+export enum EventType {
+  add='add_', 
+  update ='upd_',
+  delete = 'del_'
+};  
  
-const API_URL:string = 'https://api.gohardstudy.gq';
-const WRAPPER:string = `
+export const API_URL: string = 'https://api.gohardstudy.gq';
+export const WRAPPER: string = `
     <header class='header'>
       Hello bro, i am a header.
     </header>
@@ -16,7 +17,7 @@ const WRAPPER:string = `
     </footer>
   `;
  
-const APPEND_DIV:string = `
+export const APPEND_DIV: string = `
     <div class="todo">
         <input
             class="todoInput"
@@ -31,6 +32,6 @@ const APPEND_DIV:string = `
         </button>
     </div>
 `;
-const ElementRoot = document.getElementById('ROOT');
-const ElementTodos = document.getElementById('TODOS');
-const ElementButtonTodo = document.getElementById('add_button_todo');
+export const ElementRoot = document.getElementById('ROOT');
+export const ElementTodos = document.getElementById('TODOS');
+export const ElementButtonTodo = document.getElementById('add_button_todo');
