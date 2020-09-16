@@ -1,10 +1,10 @@
-let store = {
-    todos: []
+let store:object = {
+    todos: Array<string>()
   };
-  
-  // Constants
-const API_URL = 'https://api.gohardstudy.gq';
-const WRAPPER = `
+enum EventType {add='add_', update ='upd_', delete = 'del_'};  
+ 
+const API_URL:string = 'https://api.gohardstudy.gq';
+const WRAPPER:string = `
     <header class='header'>
       Hello bro, i am a header.
     </header>
@@ -16,7 +16,7 @@ const WRAPPER = `
     </footer>
   `;
  
-const APPEND_DIV = `
+const APPEND_DIV:string = `
     <div class="todo">
         <input
             class="todoInput"
@@ -31,3 +31,6 @@ const APPEND_DIV = `
         </button>
     </div>
 `;
+const ElementRoot = document.getElementById('ROOT');
+const ElementTodos = document.getElementById('TODOS');
+const ElementButtonTodo = document.getElementById('add_button_todo');

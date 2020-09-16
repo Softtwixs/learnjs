@@ -1,11 +1,11 @@
 
 // Instruments
-const inputName = (id) => `input_${id}`;
-const buttonName = (id) => `button_${id}`;
-const upbuttonName = (id) => `up_button_${id}`;
-const delbuttonName = (id) => `del_button_${id}`;
+const inputName:TypeTodoElementID = (id) => `input_${id}`;
+const buttonName:TypeTodoElementID = (id) => `button_${id}`;
+const upbuttonName:TypeTodoElementID = (id) => `upd_button_${id}`;
+const delbuttonName:TypeTodoElementID = (id) => `del_button_${id}`;
 
-const createTodoListHTML = (todos) => todos.reduce((acc, todo) => acc.concat(`
+const createTodoListHTML:TypeTodoList = (todos) => todos.reduce((acc:string, todo) => acc.concat(`
   <div class="todo">
     <input
       class="todoInput"
@@ -37,21 +37,26 @@ const createTodoListHTML = (todos) => todos.reduce((acc, todo) => acc.concat(`
 `), '');
 
 
-const addEventListenersToTodosButtons = (todosButtons) => 
+const addEventListenersToTodosButtons = (todosButtons:NodeListOf<Element>) => 
   void todosButtons.forEach((todoButton) => 
     void todoButton.addEventListener('click', (event) => {
      
-      switch (event.target.id.substring(0, 3)) {
-        case 'up_':
-            MyUpdateTodo(event.target.value);  
+      switch ((<HTMLButtonElement>event.target).id.substring(0, 4)) {
+        case EventType.update:
+            MyUpdateTodo((<HTMLButtonElement>event.target).value);  
             break;
-        case 'del':
-            MyDeleteTodo(event.target.value)
+        case EventType.delete:
+            MyDeleteTodo((<HTMLButtonElement>event.target).value)
             break;
         default:
-            alert(`click on ${event.target.id}`);
+            alert(`click on ${(<HTMLButtonElement>event.target).id}`);
       }   
     }));
+
+// Вопрос! Если я пишу 
+// const MyAppendTodo:TypeventWithTodo = async () => { ....
+// Получаю ошибку в строке 
+// document.getElementById("add_button_todo").addEventListener("click", MyAppendTodo);
 
 const MyAppendTodo = async () => {
     try {
@@ -61,7 +66,7 @@ const MyAppendTodo = async () => {
             'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify({ text: document.getElementById("add_input_title").value }),
+            body: JSON.stringify({ text: (<HTMLInputElement>document.getElementById("add_input_title")).value }),
         });  
         fetchTodosAndRender();
       } catch (error) {
@@ -69,7 +74,7 @@ const MyAppendTodo = async () => {
       }
 }
 
-const MyUpdateTodo = async (todoId) => {
+const MyUpdateTodo:TypeventWithTodo = async (todoId) => {
     try {
         const response = await fetch(`${API_URL}/todos/${todoId}`, {
             method: 'PUT',
@@ -85,7 +90,7 @@ const MyUpdateTodo = async (todoId) => {
       }
 }
 
-const MyDeleteTodo = async (todoId) => {
+const MyDeleteTodo:TypeventWithTodo = async (todoId) => {
     try {
         const response = await fetch(`${API_URL}/todos/${todoId}`, {
             method: 'DELETE',
@@ -113,13 +118,17 @@ const fetchTodosAndRender = async () => {
       ...store,
       todos
     };
-
-    document
-      .getElementById('TODOS')
-      .innerHTML = APPEND_DIV + createTodoListHTML(todos) ;
+    if (ElementTodos!==null){
+      ElementTodos.innerHTML = APPEND_DIV + createTodoListHTML(todos) ;
+    }
+   
 
     addEventListenersToTodosButtons(document.querySelectorAll('.todoButton'));
-    document.getElementById("add_button_todo").addEventListener("click", MyAppendTodo);
+    if (ElementButtonTodo!==null){
+        ElementButtonTodo.addEventListener("click", MyAppendTodo);
+    }
+   
+   
 
   } catch (error) {
     console.log(error);
