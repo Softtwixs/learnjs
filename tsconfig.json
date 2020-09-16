@@ -1,16 +1,30 @@
 {
     "compilerOptions": {
-      "target": "ES2015",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "lib": [
-        "es2018",
-        "dom"
+        "target": "ES5",
+        "module": "ESNext",
+        "sourceMap": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "noImplicitReturns": true,
+        "noEmit": false,
+        "outDir": "./build",
+        "rootDir": "./ts",
+        "lib": [
+          "es2018",
+          "dom",
+          "esnext"
         ]
-    },
+      },
     "$schema": "https://json.schemastore.org/tsconfig",
     "display": "Recommended"
   }

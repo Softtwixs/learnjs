@@ -9,7 +9,9 @@
   <body>
     <div id="ROOT"></div>
   </body>
-  <script src="./js/vars.js" type="text/javascript"></script>
-  <script src="./js/functions.js" type="text/javascript"></script>
-  <script src="./js/index.js" type="text/javascript"></script>
+  <!-- <script type="module" src="./build/index.js"></script> -->
+<script type="module">
+  import { loadModule } from 'https://klesun.github.io/ts-browser/src/ts-browser.js';
+  loadModule('./ts/index.ts').then(indexModule => { indexModule.default(); });
+</script>
 </html>
