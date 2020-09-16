@@ -113,7 +113,7 @@ const fetchTodosAndRender = async () => {
     });
 
     const todos = await response.json();
-
+    let ElementTodos = document.getElementById('TODOS');
     store = {
       ...store,
       todos
@@ -124,6 +124,7 @@ const fetchTodosAndRender = async () => {
    
 
     addEventListenersToTodosButtons(document.querySelectorAll('.todoButton'));
+    let ElementButtonTodo = document.getElementById('add_button_todo');
     if (ElementButtonTodo!==null){
         ElementButtonTodo.addEventListener("click", MyAppendTodo);
     }

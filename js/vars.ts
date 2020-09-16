@@ -31,6 +31,5 @@ const APPEND_DIV:string = `
         </button>
     </div>
 `;
-const ElementRoot = document.getElementById('ROOT');
-const ElementTodos = document.getElementById('TODOS');
-const ElementButtonTodo = document.getElementById('add_button_todo');
+let ElementRoot = document.getElementById('ROOT');
+
